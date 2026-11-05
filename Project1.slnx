@@ -3,6 +3,7 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Project Path="../校园一卡通系统/校园一卡通系统/校园一卡通系统.vcxproj" Id="b24b0e7f-67f6-4bd8-8ada-50c603b90db8" />
   <Project Path="Project1/Project1.vcxproj" Id="d33b26ae-2d86-405c-926c-aa9476289e67" />
   <Project Path="Project2/Project2.vcxproj" Id="4729cdef-456d-4d39-bb61-3189e1488f22" />
   <Project Path="Project3/Project3.vcxproj" Id="d3ccc87b-9907-49be-bd77-38f490bb21f6" />
