@@ -1,37 +1,68 @@
 #include <iostream>
+#include <new> // for bad_alloc
 #include "card_operations.h"
 
 using namespace std;
+using namespace card;
 
 int main() {
-    card::title("Campus Card System");
+    title("Campus Card System");
 
     int n;
     cout << "Enter number of students: ";
     cin >> n;
 
-    Card* myCards = createCards(n);
-    inputCards(myCards, n);
-    card::printLine();
+    Card* cards = nullptr;
 
-    cout << "Operating on the first account" << endl;
-    deposit(myCards[0], 100.0);
+    // Module 9: Memory allocation exception handling
     try {
-        spend(myCards[0], 8.5, "Lunch");
+        cards = createCards(n);
     }
-    catch (const exception& e) {
-        cout << "Transaction Exception: " << e.what() << endl;
+    catch (const bad_alloc& e) {
+        cout << "Memory allocation failed! System exiting." << endl;
+        return 1;
     }
 
-    showBalance(myCards[0]);
-    viewStudentID(&myCards[0]);
-    cout << "Balance in cents: " << toCent(myCards[0].balance) << endl;
+    inputCards(cards, n);
+    printLine();
 
-    cout << "\nAll Accounts Report" << endl;
-    printReport(myCards, n);
+    // Module 8: Operations on first account
+    if (n > 0) {
+        cout << "\n--- Operations on First Account ---" << endl;
+        viewStudentID(&cards[0]); // Passing const pointer
 
-    destroyCards(myCards);
-    myCards = nullptr;
+        // 1. Deposit 100
+        cout << "Depositing 100.00..." << endl;
+        deposit(cards[0], 100.0);
+        showBalance(cards[0]); // Passing const reference
+
+        // 2. Spend 8.5
+        try {
+            if (spend(cards[0], 8.5, "Lunch")) {
+                cout << "Purchase successful." << endl;
+            }
+            else {
+                throw runtime_error("Insufficient balance for this purchase.");
+            }
+        }
+        catch (const exception& e) {
+            cout << "Error: " << e.what() << endl;
+        }
+        showBalance(cards[0]);
+
+        // 3. Convert to cents
+        int cents = toCent(cards[0].balance);
+        cout << "Balance in cents: " << cents << " fen" << endl;
+        printLine();
+    }
+
+    // Module 6: Print Report
+    cout << "\n--- Account Report ---" << endl;
+    printReport(cards, n);
+
+    // Release memory
+    destroyCards(cards);
+    cout << "Memory released. System finished." << endl;
 
     return 0;
 }

@@ -28,10 +28,9 @@ int main() {
         students[i].average = (students[i].chinese + students[i].math + students[i].english) / 3.0;
     }
 
-    // 2. Print the table header
-    cout << "\n------------------------- Grade Table -------------------------" << endl;
+    
 
-    // Use left/right to control alignment, setw to control column width
+  
     cout << left << setw(15) << "Name"
         << right << setw(10) << "Chinese"
         << setw(10) << "Math"
@@ -39,25 +38,24 @@ int main() {
         << setw(12) << "Average"
         << "    Remark" << endl;
 
-    cout << "---------------------------------------------------------------" << endl;
 
-    // 3. Loop and output each student's info
+ 
     for (int i = 0; i < n; ++i) {
-        // Output name and three scores
+    
         cout << left << setw(15) << students[i].name
             << right << fixed << setprecision(1) << setw(10) << students[i].chinese
             << setw(10) << students[i].math
             << setw(10) << students[i].english
-            // Output average, keep 2 decimal places
+           
             << fixed << setprecision(2) << setw(12) << students[i].average;
 
-        // Check if average is >= 90, output remark
+      
         if (students[i].average >= 90) {
             cout << "    Excellent";
         }
         cout << endl;
     }
-    cout << "---------------------------------------------------------------" << endl;
+ 
 
     return 0;
 }
